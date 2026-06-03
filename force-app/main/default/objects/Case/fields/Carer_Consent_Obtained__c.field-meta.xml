@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Carer_Consent_Obtained__c</fullName>
+    <label>Carer Consent Obtained</label>
+    <type>Checkbox</type>
+    <defaultValue>false</defaultValue>
+    <description>Whether carer/representative consent is recorded (demo field)</description>
+</CustomField>

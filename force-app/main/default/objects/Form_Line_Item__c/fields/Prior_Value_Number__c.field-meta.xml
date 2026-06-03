@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_Value_Number__c</fullName><label>Prior Period Value (Number)</label><type>Number</type><precision>16</precision><scale>2</scale>
+    <description>The equivalent value from the prior period, for quarter-on-quarter plausibility checks.</description>
+</CustomField>

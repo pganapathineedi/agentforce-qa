@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Regulatory_Reference__c</fullName>
+    <label>Regulatory Reference</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>Optional citation for audit trail, e.g. Aged Care Act 1997 s.44-5</description>
+</CustomField>

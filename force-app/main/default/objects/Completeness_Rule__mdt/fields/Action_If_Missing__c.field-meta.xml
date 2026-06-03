@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action_If_Missing__c</fullName>
+    <label>Action If Missing</label>
+    <type>Picklist</type>
+    <description>What the agent should do when this requirement is not met</description>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Flag_Only</fullName><default>true</default><label>Flag Only</label></value>
+            <value><fullName>Create_Task</fullName><default>false</default><label>Create Task</label></value>
+            <value><fullName>Notify_Owner</fullName><default>false</default><label>Notify Owner</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

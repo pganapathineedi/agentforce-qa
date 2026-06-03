@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_QA_Verdict__c</fullName><label>Overall QA Verdict</label><type>Picklist</type>
+    <description>Rolled-up verdict across all forms on this submission. Set by the QA agent.</description>
+    <valueSet><valueSetDefinition><sorted>false</sorted>
+        <value><fullName>Pass</fullName><default>false</default><label>Pass</label></value>
+        <value><fullName>Flag</fullName><default>false</default><label>Flag</label></value>
+        <value><fullName>Fail</fullName><default>false</default><label>Fail</label></value>
+    </valueSetDefinition></valueSet>
+</CustomField>

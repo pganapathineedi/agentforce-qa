@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Apex_Handler__c</fullName>
+    <label>Apex Handler Class</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>For Custom_Apex rules: name of an Apex class implementing CompletenessRuleProvider for complex logic the engine cannot express declaratively</description>
+</CustomField>

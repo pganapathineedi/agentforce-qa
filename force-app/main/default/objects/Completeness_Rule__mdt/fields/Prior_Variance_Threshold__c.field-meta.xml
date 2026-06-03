@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_Variance_Threshold__c</fullName><label>Prior Variance Threshold</label><type>Number</type><precision>5</precision><scale>2</scale>
+    <description>For Plausibility rules. Percent swing vs prior period that warrants a flag, e.g. 15 means flag a >15% change.</description>
+</CustomField>

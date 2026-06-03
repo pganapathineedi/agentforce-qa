@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Line_Label__c</fullName><label>Line Label</label><type>Text</type><length>255</length>
+    <description>Human-readable label, e.g. "Registered Nurse - Labour Cost".</description>
+</CustomField>

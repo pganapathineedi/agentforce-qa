@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applies_To_Object__c</fullName>
+    <label>Applies To Object</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>API name of the object this rule evaluates, e.g. Case</description>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applies_To_RecordType__c</fullName>
+    <label>Applies To Record Type</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>Optional. Developer name of the record type this rule applies to. Blank = all record types.</description>
+</CustomField>

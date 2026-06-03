@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gap_Message__c</fullName>
+    <label>Gap Message</label>
+    <type>LongTextArea</type>
+    <length>500</length>
+    <visibleLines>2</visibleLines>
+    <description>Plain-English message shown when this requirement is not met, e.g. Income evidence is required for funding tier 3 and above.</description>
+</CustomField>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compare_To_Prior__c</fullName><label>Compare To Prior Period</label><type>Checkbox</type><defaultValue>false</defaultValue>
+    <description>For Plausibility rules. If true, the engine also gathers the prior-period value for quarter-on-quarter comparison.</description>
+</CustomField>

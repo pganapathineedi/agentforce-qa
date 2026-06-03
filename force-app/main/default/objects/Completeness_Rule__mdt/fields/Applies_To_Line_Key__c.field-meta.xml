@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applies_To_Line_Key__c</fullName><label>Applies To Line Key</label><type>Text</type><length>100</length>
+    <description>Optional. For line-item rules: the Line_Key this rule targets, e.g. RN_LABOUR_COST. Blank = applies to the whole form.</description>
+</CustomField>

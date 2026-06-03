@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applies_To_Line_Group__c</fullName><label>Applies To Line Group</label><type>Text</type><length>100</length>
+    <description>Optional. For line-item rules scoped to a group, e.g. worker type "Registered Nurse".</description>
+</CustomField>

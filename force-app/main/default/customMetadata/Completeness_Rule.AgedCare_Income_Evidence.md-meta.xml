@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <label>Aged Care - Income Evidence Required</label>
+    <protected>false</protected>
+    <values><field>Applies_To_Object__c</field><value xsi:type="xsd:string">Case</value></values>
+    <values><field>Trigger_Status__c</field><value xsi:type="xsd:string">Submitted</value></values>
+    <values><field>Rule_Type__c</field><value xsi:type="xsd:string">Field_Required</value></values>
+    <values><field>Target_Field_API__c</field><value xsi:type="xsd:string">Income_Evidence_Provided__c</value></values>
+    <values><field>Condition_Logic__c</field><value xsi:type="xsd:string">Funding_Tier__c >= 3</value></values>
+    <values><field>Severity__c</field><value xsi:type="xsd:string">Critical</value></values>
+    <values><field>Action_If_Missing__c</field><value xsi:type="xsd:string">Create_Task</value></values>
+    <values><field>Gap_Message__c</field><value xsi:type="xsd:string">Income evidence is required for funding tier 3 and above before this case can be submitted for assessment.</value></values>
+    <values><field>Regulatory_Reference__c</field><value xsi:type="xsd:string">Aged Care Act 1997 - means testing</value></values>
+    <values><field>Active__c</field><value xsi:type="xsd:boolean">true</value></values>
+</CustomMetadata>

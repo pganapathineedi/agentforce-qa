@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>QFR Admin Access</label>
+    <description>Full access to QFR form objects and fields for admins/agent.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <objectPermissions>
+        <object>Form__c</object>
+        <allowCreate>true</allowCreate><allowRead>true</allowRead><allowEdit>true</allowEdit><allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords><modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Form_Line_Item__c</object>
+        <allowCreate>true</allowCreate><allowRead>true</allowRead><allowEdit>true</allowEdit><allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords><modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <fieldPermissions><field>Form__c.Case__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form__c.Form_QA_Notes__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form__c.Form_QA_Verdict__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form__c.Form_Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form__c.Form_Type__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Line_Group__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Line_Key__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Line_Label__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Line_Type__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Prior_Value_Number__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Value_Boolean__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Value_Currency__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Value_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Value_Number__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Form_Line_Item__c.Value_Text__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Case.Financial_Year__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Case.Overall_QA_Verdict__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Case.QA_Summary__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Case.Reporting_Quarter__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <recordTypeVisibilities>
+        <recordType>Form__c.Labour_Cost_Hours</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

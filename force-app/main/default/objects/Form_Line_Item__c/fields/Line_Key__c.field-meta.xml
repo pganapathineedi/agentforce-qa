@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Line_Key__c</fullName><label>Line Key</label><type>Text</type><length>100</length>
+    <description>Machine-readable key for this data point, e.g. RN_LABOUR_COST. Rules reference this.</description>
+</CustomField>

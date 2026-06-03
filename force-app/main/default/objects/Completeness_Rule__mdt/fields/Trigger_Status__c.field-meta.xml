@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Trigger_Status__c</fullName>
+    <label>Trigger Status</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>The status value that triggers this completeness check, e.g. Submitted</description>
+</CustomField>

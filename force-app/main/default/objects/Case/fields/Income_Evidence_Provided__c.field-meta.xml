@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Income_Evidence_Provided__c</fullName>
+    <label>Income Evidence Provided</label>
+    <type>Checkbox</type>
+    <defaultValue>false</defaultValue>
+    <description>Whether income evidence has been captured (demo field)</description>
+</CustomField>

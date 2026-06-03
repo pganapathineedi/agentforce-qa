@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plausibility_Metric__c</fullName><label>Plausibility Metric</label><type>LongTextArea</type><length>1000</length><visibleLines>2</visibleLines>
+    <description>For Plausibility rules. The metric the engine computes and hands to the agent, e.g. "RN_LABOUR_COST / RN_HOURS" (implied hourly rate).</description>
+</CustomField>

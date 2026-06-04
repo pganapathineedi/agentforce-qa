@@ -1,8 +1,8 @@
 # Agentforce QA Engine for Government Forms
 
-A configurable, metadata-driven quality-assurance engine for government form submissions, with an **Agentforce** agent layered on top. Built on Salesforce using the Australian Aged Care **Quarterly Financial Report (QFR)** as the reference case — but designed to generalise to *any* government form.
+A configurable, metadata-driven quality-assurance engine for government form submissions, with an **Agentforce** agent layered on top. Built on Salesforce using the and designed to generalise to *any* government form.
 
-The pitch: help providers submit valid data the first time, and help QA reviewers assess submissions in a fraction of the time — with the architecture extending to any form, not just the QFR.
+The pitch: help providers submit valid data the first time, and help QA reviewers assess submissions in a fraction of the time — with the architecture extending to any form
 
 ---
 

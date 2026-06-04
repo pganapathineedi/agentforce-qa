@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QA_Declaration</fullName>
+    <active>true</active>
+    <label>QA Declaration</label>
+    <description>QFR declaration form - yes/no attestations and free-text declarations.</description>
+</RecordType>

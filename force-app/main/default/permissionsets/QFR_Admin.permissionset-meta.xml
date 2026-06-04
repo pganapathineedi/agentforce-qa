@@ -37,4 +37,12 @@
         <recordType>Form__c.Labour_Cost_Hours</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Form__c.Care_Minutes</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Form__c.QA_Declaration</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

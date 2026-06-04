@@ -119,12 +119,104 @@ public with sharing class QAEngine {
         return result;
     }
 
+    // ---- Case-level roll-up ------------------------------------------------
+
+    /** One form's contribution to the whole-submission summary. */
+    public class FormSummary {
+        @AuraEnabled public Id formId;
+        @AuraEnabled public String formType;
+        @AuraEnabled public String verdict;
+        @AuraEnabled public Integer findingCount;
+        @AuraEnabled public Integer plausibilityFlagCount;
+
+        public FormSummary(Id formId, String formType, String verdict,
+                           Integer findingCount, Integer plausibilityFlagCount) {
+            this.formId = formId;
+            this.formType = formType;
+            this.verdict = verdict;
+            this.findingCount = findingCount;
+            this.plausibilityFlagCount = plausibilityFlagCount;
+        }
+    }
+
+    /** The aggregated QA result for a whole submission (Case). */
+    public class CaseQAResult {
+        @AuraEnabled public Id caseId;
+        @AuraEnabled public String overallVerdict;        // Pass | Flag | Fail
+        @AuraEnabled public Integer formsAssessed;
+        @AuraEnabled public Integer formsPassed;
+        @AuraEnabled public Integer formsFlagged;
+        @AuraEnabled public Integer formsFailed;
+        @AuraEnabled public List<FormSummary> formSummaries;
+
+        public CaseQAResult(Id caseId) {
+            this.caseId = caseId;
+            this.overallVerdict = 'Pass';
+            this.formsAssessed = 0;
+            this.formsPassed = 0;
+            this.formsFlagged = 0;
+            this.formsFailed = 0;
+            this.formSummaries = new List<FormSummary>();
+        }
+    }
+
+    /**
+     * Assess every Form on a Case and roll up into one submission verdict.
+     * The worst form verdict drives the overall verdict:
+     *   any Fail -> Fail; else any Flag -> Flag; else Pass.
+     * This mirrors how a reviewer treats a submission: one failing form fails
+     * the submission until corrected.
+     *
+     * @param caseId  the Case representing the whole submission
+     * @return        a CaseQAResult aggregating all its forms
+     */
+    public static CaseQAResult assessCase(Id caseId) {
+        CaseQAResult agg = new CaseQAResult(caseId);
+
+        List<Form__c> forms = [
+            SELECT Id, Form_Type__c FROM Form__c WHERE Case__c = :caseId
+        ];
+
+        for (Form__c f : forms) {
+            QAResult r = assessForm(f.Id);
+            agg.formsAssessed++;
+
+            Integer plausFlags = 0;
+            for (PlausibilityFact pf : r.plausibilityFacts) {
+                if (pf.outsideRange || pf.priorSwingExceeded) plausFlags++;
+            }
+
+            agg.formSummaries.add(new FormSummary(
+                f.Id, f.Form_Type__c, r.verdict, r.findings.size(), plausFlags));
+
+            if (r.verdict == 'Fail') agg.formsFailed++;
+            else if (r.verdict == 'Flag') agg.formsFlagged++;
+            else agg.formsPassed++;
+        }
+
+        // Worst-verdict-wins roll-up
+        if (agg.formsFailed > 0) agg.overallVerdict = 'Fail';
+        else if (agg.formsFlagged > 0) agg.overallVerdict = 'Flag';
+        else agg.overallVerdict = 'Pass';
+
+        return agg;
+    }
+
     // ---- Completeness ------------------------------------------------------
 
     private static void evaluateCompleteness(Completeness_Rule__mdt rule,
             Map<String, Form_Line_Item__c> linesByKey, QAResult result) {
         String key = rule.Applies_To_Line_Key__c;
         if (String.isBlank(key)) return;
+
+        // Conditional completeness: only enforce this rule if its condition is met.
+        // Condition_Logic__c format: "OTHER_LINE_KEY = value"
+        //   e.g. "RELATED_PARTY_TRANSACTIONS = true" means this line is only
+        //   required when that other line's value is true.
+        // Blank condition = always enforce (unconditional).
+        if (!conditionMet(rule.Condition_Logic__c, linesByKey)) {
+            return;
+        }
 
         Form_Line_Item__c line = linesByKey.get(key);
         Boolean missing = (line == null) || lineValueIsEmpty(line);
@@ -134,6 +226,36 @@ public with sharing class QAEngine {
                 resolveMessage(rule, 'Required line "' + key + '" is missing or empty.'),
                 'Expected line key: ' + key,
                 rule.Regulatory_Reference__c));
+        }
+    }
+
+    /**
+     * Evaluates a simple condition of the form "LINE_KEY = value".
+     * Returns true if the condition is satisfied (or blank = always true).
+     * Supports boolean, number, and text comparison on the referenced line.
+     */
+    private static Boolean conditionMet(String condition, Map<String, Form_Line_Item__c> linesByKey) {
+        if (String.isBlank(condition)) return true;          // unconditional
+        if (!condition.contains('=')) return true;           // malformed -> don't block
+
+        String refKey = condition.substringBefore('=').trim();
+        String expected = condition.substringAfter('=').trim();
+        Form_Line_Item__c refLine = linesByKey.get(refKey);
+        if (refLine == null) return false;                   // referenced line absent -> condition not met
+
+        // Boolean comparison
+        if (expected.equalsIgnoreCase('true') || expected.equalsIgnoreCase('false')) {
+            Boolean want = expected.equalsIgnoreCase('true');
+            return refLine.Value_Boolean__c == want;
+        }
+        // Numeric comparison
+        try {
+            Decimal want = Decimal.valueOf(expected);
+            Decimal actual = (refLine.Value_Number__c != null) ? refLine.Value_Number__c : refLine.Value_Currency__c;
+            return actual != null && actual == want;
+        } catch (Exception e) {
+            // Text comparison
+            return expected.equalsIgnoreCase(refLine.Value_Text__c);
         }
     }
 
@@ -188,15 +310,22 @@ public with sharing class QAEngine {
 
         PlausibilityFact fact = new PlausibilityFact(rule.MasterLabel, metricExpr);
         fact.computedValue = value;
-        fact.expectedLow = rule.Expected_Range_Low__c;
-        fact.expectedHigh = rule.Expected_Range_High__c;
         fact.sectorBenchmark = rule.Sector_Benchmark__c;
         fact.regulatoryReference = rule.Regulatory_Reference__c;
 
-        if (rule.Expected_Range_Low__c != null && value < rule.Expected_Range_Low__c) {
+        // Range bounds may be a static number OR a line key (e.g. a mandated
+        // target line on the same form). resolveBound handles both, so a rule
+        // can say Expected_Range_Low = "MANDATED_TOTAL_TARGET" to compare actual
+        // care minutes against the regulated target captured on the form.
+        Decimal low = resolveBound(rule.Expected_Range_Low__c, rule.Expected_Range_Low_Key__c, linesByKey);
+        Decimal high = resolveBound(rule.Expected_Range_High__c, rule.Expected_Range_High_Key__c, linesByKey);
+        fact.expectedLow = low;
+        fact.expectedHigh = high;
+
+        if (low != null && value < low) {
             fact.outsideRange = true;
         }
-        if (rule.Expected_Range_High__c != null && value > rule.Expected_Range_High__c) {
+        if (high != null && value > high) {
             fact.outsideRange = true;
         }
 
@@ -215,6 +344,22 @@ public with sharing class QAEngine {
         }
 
         result.plausibilityFacts.add(fact);
+    }
+
+    /**
+     * Resolves a plausibility bound. If a line key is provided, the bound is the
+     * value of that line (e.g. a mandated target captured on the form); otherwise
+     * the static number is used. Line key takes precedence when both are set.
+     */
+    private static Decimal resolveBound(Decimal staticVal, String lineKey,
+            Map<String, Form_Line_Item__c> linesByKey) {
+        if (String.isNotBlank(lineKey)) {
+            Form_Line_Item__c line = linesByKey.get(lineKey);
+            if (line != null) {
+                return (line.Value_Number__c != null) ? line.Value_Number__c : line.Value_Currency__c;
+            }
+        }
+        return staticVal;
     }
 
     // ---- Verdict roll-up ---------------------------------------------------
